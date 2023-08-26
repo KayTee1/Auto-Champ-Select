@@ -14,24 +14,24 @@ def click(img):
 
 def banning_phase(to_ban, banned, sleep_duration):
 
-    while findImage("ban_search.png") is None and banned == False:
-        print(findImage("ban_search.png"))
+    while findImage("imgs/ban_search.png") is None and banned == False:
+        print(findImage("imgs/ban_search.png"))
         sleep(sleep_duration)
 
-    ban_cords = findImage("ban_search.png")
-    click("ban_search.png")
+    ban_cords = findImage("imgs/ban_search.png")
+    click("imgs/ban_search.png")
     sleep(sleep_duration)
 
     pyautogui.write(to_ban, interval=0.25)
     sleep(sleep_duration)
 
     ban_champion_x = ban_cords[0]-500
-    ban_champion_y = ban_cords[1]-75
+    ban_champion_y = ban_cords[1]+100
 
     pyautogui.click(ban_champion_x, ban_champion_y)
     sleep(sleep_duration)
 
-    click("ban_button.png")
+    click("imgs/ban_button.png")
     sleep(sleep_duration)
 
     print("Banned "+ to_ban + "!")
@@ -41,23 +41,26 @@ def picking_phase(to_select, to_ban, chose, sleep_duration):
 
     print("Waiting for pick turn")
     #used sort_by_fav button, because the search button didnt work >:
-    while findImage("sort_by_fav.png") is None and chose == False:
+    while findImage("imgs/sort_by_fav.png") is None and chose == False:
         sleep(sleep_duration)
 
-    normal_search_cords = findImage("sort_by_fav.png")
+    sort_by_fav_btn = findImage("imgs/sort_by_fav.png")
 
-    search_cords_x = normal_search_cords[0]+300
-    search_cords_y = normal_search_cords[1]+35
+    search_bar_x = sort_by_fav_btn[0]+300
+    search_bar_y = sort_by_fav_btn[1]+35
 
-    pyautogui.click(search_cords_x, search_cords_y)
-
-    sleep(sleep_duration)
-    pyautogui.write(to_select,interval=0.25)
+    pyautogui.click(search_bar_x, search_bar_y)
     sleep(sleep_duration)
 
-    pyautogui.click(normal_search_cords[0]-340,normal_search_cords[1]+95)
+    pyautogui.write(to_select, interval=0.25)
     sleep(sleep_duration)
-    click("lock_button.png")
+
+    champion_picking_x = sort_by_fav_btn[0]-340
+    champion_picking_y = sort_by_fav_btn[1]+95
+
+    pyautogui.click(champion_picking_x, champion_picking_y)
+    sleep(sleep_duration)
+    click("imgs/lock_button.png")
 
     print("Selected [{0}] And Banned [{1}]".format(to_select,to_ban))
     chose = True
@@ -71,21 +74,23 @@ def main():
     to_ban = input("what champion to ban?: ")
     to_select= input("what champion to play?: ")
     print("In Queue")
-
+    """
     #searching for accept button
-    while findImage("accepted.png") is None and accepted == False:
+    while findImage("imgs/accepted.png") is None and accepted == False:
         sleep(sleep_duration)
         try:
             #hovered accept: when someone dodges, the mouse is still on the accept button
             #the accept button glows when its hovered
-            click("accept.png") or click("hovered_accept.png")
+            click("imgs/accept.png") or click("imgs/hovered_accept.png")
         except:
             print("cant find accept")
     accepted = True
     print("In Champ select")
 
     #banning and picking phase
+
     banning_phase(to_ban, banned, sleep_duration)
+    """
     picking_phase(to_select, to_ban, chose, sleep_duration)
 
 
