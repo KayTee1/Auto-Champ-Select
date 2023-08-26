@@ -74,7 +74,7 @@ def main():
     to_ban = input("what champion to ban?: ")
     to_select= input("what champion to play?: ")
     print("In Queue")
-    """
+
     #searching for accept button
     while findImage("imgs/accepted.png") is None and accepted == False:
         sleep(sleep_duration)
@@ -90,7 +90,7 @@ def main():
     #banning and picking phase
 
     banning_phase(to_ban, banned, sleep_duration)
-    """
+
     picking_phase(to_select, to_ban, chose, sleep_duration)
 
 
