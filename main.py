@@ -46,6 +46,7 @@ def picking_phase(to_select, to_ban, chose, sleep_duration):
 
     sort_by_fav_btn = findImage("imgs/sort_by_fav.png")
 
+    #not using findImage or click funtion because it didnt recognize the search-field like it did in banning phase
     search_bar_x = sort_by_fav_btn[0]+300
     search_bar_y = sort_by_fav_btn[1]+35
 
