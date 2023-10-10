@@ -1,5 +1,30 @@
 import pyautogui
 from time import sleep
+import tkinter as tk
+from tkinter import messagebox, ttk
+
+class AutoChampGUI:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.title("Auto-Champ-Select")
+        self.root.geometry("400x400")
+        title_label = ttk.Label(master = self.root, text = "Automatic Champ Select", font = "calibri 24 bold")
+        title_label.pack()
+
+        inputTxt = tk.Text(self.root,
+				height = 5,
+				width = 20)
+        inputTxt.pack()
+        acceptButton = tk.Button(self.root,
+						text = "Print",
+						command = printInput)
+        acceptButton.pack()
+
+
+    def run(self):
+        self.root.mainloop()
+
+
 
 def findImage(image):
     #cords = pixel coordinates for specific images
@@ -67,6 +92,12 @@ def picking_phase(to_select, to_ban, chose, sleep_duration):
     chose = True
 
 def main():
+    app = AutoChampGUI()
+    app.run()
+
+
+def oldMain():
+
     accepted = False
     banned = False
     chose = False
@@ -92,7 +123,5 @@ def main():
 
     banning_phase(to_ban, banned, sleep_duration)
     picking_phase(to_select, to_ban, chose, sleep_duration)
-
-
 if __name__ == "__main__":
     main()
