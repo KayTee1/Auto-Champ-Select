@@ -4,28 +4,32 @@ import tkinter as tk
 from tkinter import ttk
 
 label_list = []
-def inChampSelect(to_ban, to_pick):
+def inChampSelect(app, to_ban, to_pick):
     accepted = False
     banned = False
     chose = False
     sleep_duration = 0.5
 
-    #searching for accept button
-    while findImage("imgs/accepted.png") is None and accepted == False:
-        sleep(sleep_duration)
+    sleep(sleep_duration)
+    # Searching for accept button
+    def check_accepted():
         try:
-            #hovered accept: when someone dodges, the mouse is still on the accept button
-            #the accept button glows when its hovered
-            click("imgs/accept.png") or click("imgs/hovered_accept.png")
+            if click("imgs/accept.png") or click("imgs/hovered_accept.png"):
+                makeLabel(app, "In Champ Select")
+
+            else:
+                app.after(1000, check_accepted)
         except:
-            print("cant find accept")
-    accepted = True
+            makeLabel(app, "Can't find Accept button")
+
+    check_accepted()
+    makeLabel(app, "In Champ Select")
     print("In Champ select")
 
-    #banning and picking phase
 
-    banning_phase(to_ban, banned, sleep_duration)
-    picking_phase(to_pick, to_ban, chose, sleep_duration)
+    banning_phase(app, to_ban, banned, sleep_duration)
+    picking_phase(app, to_pick, to_ban, chose, sleep_duration)
+
 
 def makeInputFields(app, entry_vars):
     input_frame_ban = tk.Frame(app)
@@ -40,15 +44,15 @@ def makeInputFields(app, entry_vars):
 
 
 def makeLabel(app, string):
-    champToBanLabel = ttk.Label(app, text=string, font="calibri 18")
-    champToBanLabel.pack()
-    label_list.append(champToBanLabel)
+    label = ttk.Label(app, text=string, font="calibri 18")
+    label.pack()
+    label_list.append(label)
 
 
 def processInputs(app, entry_vars):
+    #clearing out previous labels
     for label in label_list:
         label.destroy()
-
     label_list.clear()
 
     to_ban = entry_vars[0].get()
@@ -58,10 +62,9 @@ def processInputs(app, entry_vars):
 
     if to_pick != "" and to_ban != "":
         makeLabel(app, "In Queue")
-        print("HI")
         sleep(1)
 
-        inChampSelect(to_ban, to_pick)
+        inChampSelect(app, to_ban, to_pick)
     else:
         makeLabel(app, "Invalid Input!")
 
@@ -78,7 +81,7 @@ def click(img):
     if(findImage(img) is not None):
         pyautogui.click(findImage(img))
 
-def banning_phase(to_ban, banned, sleep_duration):
+def banning_phase(app, to_ban, banned, sleep_duration):
 
     while findImage("imgs/ban_search.png") is None and banned == False:
         print(findImage("imgs/ban_search.png"))
@@ -99,12 +102,12 @@ def banning_phase(to_ban, banned, sleep_duration):
 
     click("imgs/ban_button.png")
     sleep(sleep_duration)
-
+    makeLabel(app, "Banned {to_ban} !")
     print("Banned "+ to_ban + "!")
     banned = True
 
-def picking_phase(to_select, to_ban, chose, sleep_duration):
-
+def picking_phase(app, to_select, to_ban, chose, sleep_duration):
+    makeLabel(app, "Banned {to_ban} !")
     print("Waiting for pick turn")
     #used sort_by_fav button, because the search button didnt work >:
     while findImage("imgs/sort_by_fav.png") is None and chose == False:
@@ -129,6 +132,7 @@ def picking_phase(to_select, to_ban, chose, sleep_duration):
     sleep(sleep_duration)
     click("imgs/lock_button.png")
 
+    makeLabel(app, f"Selected {to_select} And Banned {to_ban} !")
     print("Selected [{0}] And Banned [{1}]".format(to_select,to_ban))
     chose = True
 
@@ -151,7 +155,7 @@ def main():
     makeInputFields(app, [to_ban, to_pick])
 
     app.mainloop()
-
+    print("baibai")
 
 
 if __name__ == "__main__":
