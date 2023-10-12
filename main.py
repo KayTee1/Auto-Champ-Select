@@ -10,22 +10,26 @@ def inChampSelect(app, to_ban, to_pick):
     chose = False
     sleep_duration = 0.5
 
-    sleep(sleep_duration)
-    # Searching for accept button
-    def check_accepted():
+    """ #searching for accept button
+    while findImage("imgs/accepted.png") is None and accepted == False:
+        sleep(sleep_duration)
         try:
-            if click("imgs/accept.png") or click("imgs/hovered_accept.png"):
-                makeLabel(app, "In Champ Select")
-
-            else:
-                app.after(1000, check_accepted)
+            #hovered accept: when someone dodges, the mouse is still on the accept button
+            #the accept button glows when its hovered
+            click("imgs/accept.png") or click("imgs/hovered_accept.png")
         except:
-            makeLabel(app, "Can't find Accept button")
+            makeInputFields()
+            print("cant find accept")
+    """
 
-    check_accepted()
+    for i in range(0, 5):
+        findImage("imgs/accepted.png")
+
+    accepted = True
     makeLabel(app, "In Champ Select")
     print("In Champ select")
 
+    #banning and picking phase
 
     banning_phase(app, to_ban, banned, sleep_duration)
     picking_phase(app, to_pick, to_ban, chose, sleep_duration)
