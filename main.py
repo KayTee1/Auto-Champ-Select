@@ -4,30 +4,32 @@ import tkinter as tk
 from tkinter import ttk
 
 label_list = []
-def inChampSelect(app, to_ban, to_pick):
+def inQueue(app, to_ban, to_pick):
     accepted = False
     banned = False
     chose = False
     sleep_duration = 0.5
 
-    """ #searching for accept button
-    while findImage("imgs/accepted.png") is None and accepted == False:
+    #searching for accept button
+    while findImage("imgs/accept.png") is None and accepted == False:
         sleep(sleep_duration)
         try:
             #hovered accept: when someone dodges, the mouse is still on the accept button
             #the accept button glows when its hovered
             click("imgs/accept.png") or click("imgs/hovered_accept.png")
+            accepted = True
         except:
-            makeInputFields()
+            makeLabel(app, "Cant find Accept Button")
             print("cant find accept")
     """
-
-    for i in range(0, 5):
-        findImage("imgs/accepted.png")
-
-    accepted = True
+    sleep(1)
+    findImage("imgs/accept.png")
+    click("imgs/accept.png")
+    """
+    
     makeLabel(app, "In Champ Select")
     print("In Champ select")
+    
 
     #banning and picking phase
 
@@ -40,7 +42,8 @@ def makeInputFields(app, entry_vars):
     entry_ban = ttk.Entry(input_frame_ban, textvariable=entry_vars[0])
     entry_pick = ttk.Entry(input_frame_ban, textvariable=entry_vars[1])
     button = ttk.Button(input_frame_ban, text='Confirm',
-                        command=lambda: processInputs(app, entry_vars))
+                        command=lambda:inQueue(app, "da", "za"))
+                        #command=lambda: processInputs(app, entry_vars))
     entry_ban.pack(side='left', padx=10)
     entry_pick.pack(side='left', padx=10)
     button.pack(side='left')
@@ -68,7 +71,7 @@ def processInputs(app, entry_vars):
         makeLabel(app, "In Queue")
         sleep(1)
 
-        inChampSelect(app, to_ban, to_pick)
+        inQueue(app, to_ban, to_pick)
     else:
         makeLabel(app, "Invalid Input!")
 
