@@ -9,7 +9,7 @@ def inQueue(app, to_ban, to_pick):
     banned = False
     chose = False
     sleep_duration = 0.5
-
+    """
     #searching for accept button
     while findImage("imgs/accept.png") is None and accepted == False:
         sleep(sleep_duration)
@@ -23,9 +23,9 @@ def inQueue(app, to_ban, to_pick):
             print("cant find accept")
     """
     sleep(1)
-    findImage("imgs/accept.png")
-    click("imgs/accept.png")
-    """
+    pyautogui.moveTo(findImage("imgs/test.png"))
+    
+    
     
     makeLabel(app, "In Champ Select")
     print("In Champ select")
