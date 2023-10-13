@@ -1,9 +1,9 @@
-import pyautogui
 from time import sleep
 import tkinter as tk
 from tkinter import ttk
 
 from champSelectLogic import inQueue
+from labelList import labels
 
 
 def makeInputFields(app, entry_vars, label_list):
@@ -11,8 +11,7 @@ def makeInputFields(app, entry_vars, label_list):
     entry_ban = ttk.Entry(input_frame_ban, textvariable=entry_vars[0])
     entry_pick = ttk.Entry(input_frame_ban, textvariable=entry_vars[1])
     button = ttk.Button(input_frame_ban, text='Confirm',
-                        command=lambda:inQueue(app, "da", "za", label_list))
-                        #command=lambda: processInputs(app, entry_vars))
+                        command=lambda: processInputs(app, entry_vars, label_list))
     entry_ban.pack(side='left', padx=10)
     entry_pick.pack(side='left', padx=10)
     button.pack(side='left')
@@ -46,7 +45,7 @@ def processInputs(app, entry_vars, label_list):
 
 
 def main():
-    label_list = []
+    label_list = labels
 
     app = tk.Tk()
     app.title("Auto-Champ-Select")
