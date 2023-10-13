@@ -3,7 +3,8 @@ from time import sleep
 import tkinter as tk
 from tkinter import ttk
 
-label_list = []
+from gui import makeLabel, label_list
+
 def inQueue(app, to_ban, to_pick):
     accepted = False
     banned = False
@@ -27,7 +28,7 @@ def inQueue(app, to_ban, to_pick):
     #google search for working find "pyautogui confidence"
     
     
-    makeLabel(app, "In Champ Select")
+    makeLabel(app, "In Champ Select", label_list)
     print("In Champ select")
     
 
@@ -35,45 +36,6 @@ def inQueue(app, to_ban, to_pick):
 
     banning_phase(app, to_ban, banned, sleep_duration)
     picking_phase(app, to_pick, to_ban, chose, sleep_duration)
-
-
-def makeInputFields(app, entry_vars):
-    input_frame_ban = tk.Frame(app)
-    entry_ban = ttk.Entry(input_frame_ban, textvariable=entry_vars[0])
-    entry_pick = ttk.Entry(input_frame_ban, textvariable=entry_vars[1])
-    button = ttk.Button(input_frame_ban, text='Confirm',
-                        command=lambda:inQueue(app, "da", "za"))
-                        #command=lambda: processInputs(app, entry_vars))
-    entry_ban.pack(side='left', padx=10)
-    entry_pick.pack(side='left', padx=10)
-    button.pack(side='left')
-    input_frame_ban.pack(pady=10)
-
-
-def makeLabel(app, string):
-    label = ttk.Label(app, text=string, font="calibri 18")
-    label.pack()
-    label_list.append(label)
-
-
-def processInputs(app, entry_vars):
-    #clearing out previous labels
-    for label in label_list:
-        label.destroy()
-    label_list.clear()
-
-    to_ban = entry_vars[0].get()
-    to_pick = entry_vars[1].get()
-    print("Champ To Ban:", to_ban)
-    print("Champ To Pick:", to_pick)
-
-    if to_pick != "" and to_ban != "":
-        makeLabel(app, "In Queue")
-        sleep(1)
-
-        inQueue(app, to_ban, to_pick)
-    else:
-        makeLabel(app, "Invalid Input!")
 
 
 
@@ -109,12 +71,12 @@ def banning_phase(app, to_ban, banned, sleep_duration):
 
     click("imgs/ban_button.png")
     sleep(sleep_duration)
-    makeLabel(app, "Banned {to_ban} !")
+    makeLabel(app, "Banned {to_ban} !", label_list)
     print("Banned "+ to_ban + "!")
     banned = True
 
 def picking_phase(app, to_select, to_ban, chose, sleep_duration):
-    makeLabel(app, "Banned {to_ban} !")
+    makeLabel(app, "Banned {to_ban} !", label_list)
     print("Waiting for pick turn")
     #used sort_by_fav button, because the search button didnt work >:
     while findImage("imgs/sort_by_fav.png") is None and chose == False:
@@ -139,31 +101,7 @@ def picking_phase(app, to_select, to_ban, chose, sleep_duration):
     sleep(sleep_duration)
     click("imgs/lock_button.png")
 
-    makeLabel(app, f"Selected {to_select} And Banned {to_ban} !")
+    makeLabel(app, f"Selected {to_select} And Banned {to_ban} !", label_list)
     print("Selected [{0}] And Banned [{1}]".format(to_select,to_ban))
     chose = True
 
-def main():
-    app = tk.Tk()
-    app.title("Auto-Champ-Select")
-    app.geometry('400x300')
-
-    title_label = ttk.Label(
-        app, text="Automatic Champ Select", font="calibri 24 bold")
-    title_label.pack()
-
-    to_ban = tk.StringVar()
-    to_pick = tk.StringVar()
-
-    input_label = ttk.Label(
-        app, text="Champ To Ban and Champ To Pick:", font="calibri 18")
-    input_label.pack()
-
-    makeInputFields(app, [to_ban, to_pick])
-
-    app.mainloop()
-    print("baibai")
-
-
-if __name__ == "__main__":
-    main()
