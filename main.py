@@ -103,6 +103,9 @@ def picking_phase(app, to_select, to_ban):
 
     sort_by_fav_btn = findImage("imgs/sort_by_fav.png")
 
+<<<<<<< HEAD
+>>>>>>> parent of eeac9b2 (fixed bug in picking phase)
+=======
 >>>>>>> parent of eeac9b2 (fixed bug in picking phase)
     search_bar_x = sort_by_fav_btn[0]+300
     search_bar_y = sort_by_fav_btn[1]+35
