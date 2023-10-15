@@ -4,7 +4,7 @@ import tkinter as tk
 from tkinter import ttk
 
 label_list = []
-sleep_duration = 1
+sleep_duration = 2
 
 
 #for testing purposes will use "imgs/test.png" instead of the real use case
@@ -13,33 +13,28 @@ sleep_duration = 1
 #CRASHING!!
 def inQueue(app, to_ban, to_pick):
     accepted = False
-    sleep_duration = 0.5
-    
-    print("here")
 
     #searching for accept button
     ##imgs/accept.png
-    while findImage("imgs/test.png", 0) is None and accepted == False:
+    while accepted == False:
         sleep(sleep_duration)
-        try:
-            #hovered accept: when someone dodges, the mouse is still on the accept button
-            #the accept button glows when its hovered
+        
+        makeLabel(app, "Waiting for Queue pop...")
+            
+        #hovered accept: when someone dodges, the mouse is still on the accept button
+        #the accept button glows when its hovered
 
-            #https://www.google.com/search?client=firefox-b-lm&q=pyautogui+confidence
-            ##imgs/accept.png imgs/hovered_accept.png
-            findImage("imgs/test.png", 1) or findImage("imgs/test.png", 1)
+        #https://www.google.com/search?client=firefox-b-lm&q=pyautogui+confidence
+        ##imgs/accept.png imgs/hovered_accept.png
+        cords1 = findImage("imgs/test.png", 1)
+        cords2 = findImage("imgs/test.png", 1)
+
+        if cords1 or cords2 is not None:
             accepted = True
-        except:
-            makeLabel(app, "Cant find Accept Button")
-            print("cant find accept")
-
     
     makeLabel(app, "In Champ Select")
-    print("In Champ select")
-    
 
     #banning and picking phase
-
     banning_phase(app, to_ban)
     picking_phase(app, to_pick, to_ban)
 
@@ -49,31 +44,36 @@ def inQueue(app, to_ban, to_pick):
 def findImage(image, option):
     sleep(1)
     cords = pyautogui.locateOnScreen(image,confidence=0.98)
-    if(option == 0):
-        #cords = pixel coordinates for specific images    
-        return cords
-    else:
-        pyautogui.click(cords)
-        return cords
+    print(cords)
+    if(option == 1):
+        #cords = pixel coordinates for specific images 
+        if(cords != None):
+            pyautogui.click(cords)
+        
+    return cords
     
     
 
 def banning_phase(app, to_ban):
     banned = False
-    makeLabel(app, f"Waiting for Banning phase")
+    makeLabel(app, "Waiting for Banning phase")
 
     while banned == False:
-        cords = findImage("imgs/ban_search.png", 1)
+        #imgs/accepted.png
+        cords = findImage("imgs/test.png", 0)
         sleep(sleep_duration)
         if(cords != None): 
             banned = True
-
     
+    #imgs/ban_search.png
+    findImage("imgs/test.png", 1)
+    sleep(sleep_duration + 2)
     pyautogui.write(to_ban, interval=0.25)
     sleep(sleep_duration)
 
-    #cords for the actual icon after typing to_ban in the search bar 
-    ban_cords = findImage("imgs/ban_search.png")
+    #cords for the actual icon after typing to_ban in the search bar
+    #  "imgs/ban_search.png"
+    ban_cords = findImage("imgs/test.png", 0)
     ban_champion_x = ban_cords[0]-500
     ban_champion_y = ban_cords[1]+100
 
@@ -82,8 +82,7 @@ def banning_phase(app, to_ban):
 
     findImage("imgs/ban_button.png", 1)
     sleep(sleep_duration)
-    makeLabel(app, "Banned {to_ban} !")
-    print("Banned "+ to_ban + "!")
+    makeLabel(app, f"Banned {to_ban} !")
     banned = True
 
 def picking_phase(app, to_select, to_ban):
@@ -134,10 +133,10 @@ def makeInputFields(app, entry_vars):
 
 def makeLabel(app, string):
     #clearing out previous labels
-    #for label in label_list:
-        #label.destroy()
-    #label_list.clear()
-
+    for label in label_list:
+        label.destroy()
+    label_list.clear()
+    print(string)
     sleep(sleep_duration)
 
     label = ttk.Label(app, text=string, font="calibri 18")
@@ -151,13 +150,9 @@ def processInputs(app, entry_vars):
     to_pick = entry_vars[1].get()
     print("Champ To Ban:", to_ban)
     print("Champ To Pick:", to_pick)
-    makeLabel(app, "WHAT")
-    makeLabel(app, "WHAT")
-    makeLabel(app, "WHAT")
-    makeLabel(app, "WHAT")
+
     if to_pick != "" and to_ban != "":
         makeLabel(app, "In Queue")
-        sleep(1)
         inQueue(app, to_ban, to_pick)
     else:
         makeLabel(app, "Invalid Input!")
@@ -180,7 +175,7 @@ def main():
     input_label.pack()
     
     makeInputFields(app, [to_ban, to_pick])
-    
+
     app.mainloop()
     print("baibai")
 
