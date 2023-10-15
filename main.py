@@ -25,6 +25,7 @@ def inQueue(app, to_ban, to_pick):
             #hovered accept: when someone dodges, the mouse is still on the accept button
             #the accept button glows when its hovered
 
+            #https://www.google.com/search?client=firefox-b-lm&q=pyautogui+confidence
             ##imgs/accept.png imgs/hovered_accept.png
             findImage("imgs/test.png", 1) or findImage("imgs/test.png", 1)
             accepted = True
