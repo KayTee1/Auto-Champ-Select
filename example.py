@@ -18,11 +18,10 @@ def findImage(image):
         print(f"An error occurred while searching for '{image}': {e}")
 
 while True:
-    accept_coords = findImage("imgs/accept.png")
-    if accept_coords is not None:
-        print("Accept button found at:", accept_coords)
-        click("imgs/accept.png")
-        break  # Exit the loop once the accept button is found
+    accept_cords = findImage("imgs/test.png")
+    if accept_cords is not None:
+        print("test found at:", accept_cords)
+        sleep(1)
     else:
-        print("Accept button not found. Retrying...")
+        print("test not found. Retrying...")
         sleep(1)
