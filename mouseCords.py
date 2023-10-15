@@ -18,14 +18,7 @@ def findImage(image, option):
 
 print('Press Ctrl-C to quit.')
 try:
-    while True:
-        sleep(2)
-        cords = findImage("imgs/test.png", 0)
-        if cords == None:
-            print("NOP")
-        else:
-            print("yay")
-            #pyautogui.moveTo(cords)
+    pyautogui.write("WAT", interval=0.25)
 
 except KeyboardInterrupt:
     print('\n')
