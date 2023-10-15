@@ -93,11 +93,17 @@ def picking_phase(app, to_select, to_ban):
     #used sort_by_fav button, because the search button didnt work >:
     while picked == False:
         sleep(sleep_duration)
+<<<<<<< HEAD
         sort_by_fav_btn = findImage("imgs/sort_by_fav.png", 0)
         if(sort_by_fav_btn != None):
             picked = True
             
     #not using findImage or click funtion because it doesnt recognize the search-field like it does in the banning phase
+=======
+
+    sort_by_fav_btn = findImage("imgs/sort_by_fav.png")
+
+>>>>>>> parent of eeac9b2 (fixed bug in picking phase)
     search_bar_x = sort_by_fav_btn[0]+300
     search_bar_y = sort_by_fav_btn[1]+35
 
