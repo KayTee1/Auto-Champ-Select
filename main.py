@@ -115,8 +115,6 @@ def picking_phase(app, to_select, to_ban):
     findImage("imgs/lock_button.png", 1)
 
     makeLabel(app, f"Selected {to_select} And Banned {to_ban} !")
-    print("Selected [{0}] And Banned [{1}]".format(to_select,to_ban))
-   
 
 
 def makeInputFields(app, entry_vars):
@@ -136,7 +134,7 @@ def makeLabel(app, string):
     for label in label_list:
         label.destroy()
     label_list.clear()
-    print(string)
+
     sleep(sleep_duration)
 
     label = ttk.Label(app, text=string, font="calibri 18")
@@ -150,6 +148,10 @@ def processInputs(app, entry_vars):
     to_pick = entry_vars[1].get()
     print("Champ To Ban:", to_ban)
     print("Champ To Pick:", to_pick)
+
+    pick_and_bans_label = ttk.Label(
+        app, text=f"Banning {to_ban} and Picking {to_pick}", font="calibri 18")
+    pick_and_bans_label.pack()
 
     if to_pick != "" and to_ban != "":
         makeLabel(app, "In Queue")
